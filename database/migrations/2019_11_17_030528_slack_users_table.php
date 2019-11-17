@@ -20,6 +20,7 @@ class SlackUsersTable extends Migration
             $table->string('real_name');
             $table->string('title');
             $table->string('email');
+            $table->timestamps();
             $table->softDeletes();
         });
     }
