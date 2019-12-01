@@ -33,6 +33,7 @@ return [
     'slack' => [
         'link' => 'https://slack.com/api/',
         'token' => env('SLACK_TOKEN'),
+        'bot_user_token' => env('SLACK_BOT_USER_TOKEN'),
         'token_type' => env('SLACK_TOKEN_TYPE'),
         'users_endpoint' => 'users.list',
         'im_open_endpoint' => 'im.open',
