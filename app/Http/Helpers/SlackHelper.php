@@ -28,6 +28,6 @@ class SlackHelper
         $slack_user->private_channel_id = $request->channel->id;
         $slack_user->update();
 
-        return $slack_user->private_channel_id;
+        return $slack_user;
     }
 }
