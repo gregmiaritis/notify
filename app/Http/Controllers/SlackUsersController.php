@@ -3,24 +3,29 @@
 namespace App\Http\Controllers;
 
 use App\SlackUser;
+use GuzzleHttp\Client;
 use Symfony\Component\HttpFoundation\Response;
 
 class SlackUsersController extends Controller
 {
-    private $slack_api_link, $slack_api_token, $slack_api_token_type;
+    private $slack_api_link, 
+            $slack_api_token, 
+            $slack_api_token_type,
+            $slack_users_endpoint;
 
     public function __construct()
     {
         $this->slack_api_link = config('services.slack.link');
         $this->slack_api_token = config('services.slack.token');
         $this->slack_api_token_type = config('services.slack.token_type');
+        $this->slack_users_endpoint = config('services.slack.users_endpoint');
     }
 
     public function importSlackUsers()
     {
-        $client = new \GuzzleHttp\Client();
+        $client = new Client;
 
-        $request = $client->get($this->slack_api_link, [
+        $request = $client->get($this->slack_api_link.$this->slack_users_endpoint, [
             'headers' => [
                 'Authorization' => $this->slack_api_token_type.' '.$this->slack_api_token,
             ]
