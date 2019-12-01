@@ -31,9 +31,12 @@ return [
     ],
 
     'slack' => [
-        'link' => env('SLACK_LINK'),
+        'link' => 'https://slack.com/api/',
         'token' => env('SLACK_TOKEN'),
         'token_type' => env('SLACK_TOKEN_TYPE'),
+        'users_endpoint' => 'users.list',
+        'im_open_endpoint' => 'im.open',
+        'post_message_endpoint' => 'chat.postMessage',
     ],
 
 ];
