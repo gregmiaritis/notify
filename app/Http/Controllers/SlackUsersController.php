@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use SlackHelper;
 use App\SlackUser;
 use GuzzleHttp\Client;
-use App\Http\Helpers\SlackHelper;
 use Symfony\Component\HttpFoundation\Response;
 
 class SlackUsersController extends Controller
@@ -69,9 +69,9 @@ class SlackUsersController extends Controller
         $client->post(
             $this->slack_api_link.
             $this->slack_post_message_endpoint.
-            '?token='.$this->slack_bot_user_token.
-            '&channel='.$slack_user->private_channel_id.
-            '&text=Text Area'
+            SlackHelper::sendSlackMessage($this->slack_bot_user_token, $slack_user)
         );
+
+        return response()->json('Message has been sent', Response::HTTP_OK);
     }
 }
