@@ -18,3 +18,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+//import
+Route::get('/import/slack-users', 'SlackUsersController@importSlackUsers');
+Route::get('/import/notify', 'SlackUsersController@sendSlackMessage');
