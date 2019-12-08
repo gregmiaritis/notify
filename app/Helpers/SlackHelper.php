@@ -12,7 +12,7 @@ class SlackHelper
         $slack_api_link = config('services.slack.link');
         $slack_api_token = config('services.slack.token');
         $slack_im_open_endpoint = config('services.slack.im_open_endpoint');
-        
+
         $slack_user = SlackUser::find($slack_user_id);
 
         $client = new Client;
@@ -22,7 +22,7 @@ class SlackHelper
             '?token='.$slack_api_token.
             '&user='.$slack_user->slack_id
         );
-        
+
         $request = json_decode($request->getBody()->getContents());
 
         $slack_user->private_channel_id = $request->channel->id;
