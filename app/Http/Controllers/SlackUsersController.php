@@ -35,9 +35,9 @@ class SlackUsersController extends Controller
                 'Authorization' => $this->slack_api_token_type.' '.$this->slack_api_token,
             ]
         ]);
-        
+
         $slack_users = json_decode($request->getBody()->getContents());
-        
+
         foreach ($slack_users->members as $slack_user) {
             if (!$slack_user->is_bot && $slack_user->name != 'slackbot') {
                 SlackUser::firstOrCreate(

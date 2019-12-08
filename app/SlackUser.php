@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class SlackUser extends Model
 {
     protected $table = 'slack_users';
-    
+
     protected $fillable = [
         'id',
         'name',
