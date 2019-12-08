@@ -9,12 +9,12 @@ use Symfony\Component\HttpFoundation\Response;
 
 class SlackUsersController extends Controller
 {
-    private $slack_api_link, 
-            $slack_api_token, 
-            $slack_bot_user_token,
-            $slack_api_token_type,
-            $slack_post_message_endpoint,
-            $slack_users_endpoint;
+    private $slack_api_link;
+    private $slack_api_token;
+    private $slack_bot_user_token;
+    private $slack_api_token_type;
+    private $slack_post_message_endpoint;
+    private $slack_users_endpoint;
 
     public function __construct()
     {
@@ -39,7 +39,7 @@ class SlackUsersController extends Controller
         $slack_users = json_decode($request->getBody()->getContents());
         
         foreach ($slack_users->members as $slack_user) {
-            if(!$slack_user->is_bot && $slack_user->name != 'slackbot') {
+            if (!$slack_user->is_bot && $slack_user->name != 'slackbot') {
                 SlackUser::firstOrCreate(
                     [
                         'slack_id' => $slack_user->id
