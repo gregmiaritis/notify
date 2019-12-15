@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\SlackUser;
 use GuzzleHttp\Client;
+use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 class SlackUsersController extends Controller
@@ -49,7 +50,7 @@ class SlackUsersController extends Controller
             }
         }
 
-        return response()->json('Imported', Response::HTTP_OK);
+        return new JsonResponse(['message' => 'Message has been sent'], Response::HTTP_OK);
     }
 
 }
