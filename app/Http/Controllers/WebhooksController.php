@@ -19,7 +19,7 @@ class WebhooksController extends Controller
         $author = SlackHelper::prepareData($request->user);
         $pull_request = SlackHelper::prepareData($request->object_attributes);
 
-        if($pull_request->state === SlackUsersController::OPENED_PR) {
+        if ($pull_request->state === SlackUsersController::OPENED_PR) {
             $pull_request_data = SlackHelper::gitlabData($pull_request, $author);
             SlackHelper::sendSlackMessage($slack_user, $pull_request_data);
         }

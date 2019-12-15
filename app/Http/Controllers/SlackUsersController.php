@@ -52,5 +52,4 @@ class SlackUsersController extends Controller
 
         return new JsonResponse(['message' => 'Message has been sent'], Response::HTTP_OK);
     }
-
 }
