@@ -21,4 +21,9 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 //import
 Route::get('/import/slack-users', 'SlackUsersController@importSlackUsers');
-Route::get('/import/notify', 'SlackUsersController@sendSlackMessage');
+
+Route::prefix('webhook')->group(function () {
+    Route::post('gitlab', 'WebhooksController@gitlab');
+    Route::post('bitbucket', 'WebhooksController@bitbucket');
+});
+

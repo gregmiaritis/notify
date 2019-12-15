@@ -7,6 +7,13 @@ use GuzzleHttp\Client;
 
 class SlackHelper
 {
+    public static function prepareData($data)
+    {
+        $data = json_decode(json_encode($data));
+
+        return $data;
+    }
+
     public static function getPrivateChannelId($slack_user_id)
     {
         $slack_api_link = config('services.slack.link');
@@ -31,7 +38,25 @@ class SlackHelper
         return $slack_user;
     }
 
-    public static function sendSlackMessage($token, $slack_user)
+    public static function sendSlackMessage($slack_user, $pull_request)
+    {
+        $slack_api_link = config('services.slack.link');
+        $slack_bot_user_token = config('services.slack.bot_user_token');
+        $slack_post_message_endpoint = config('services.slack.post_message_endpoint');
+
+        if (!$slack_user->private_channel_id) {
+            $slack_user = SlackHelper::getPrivateChannelId($slack_user->id);
+        }
+
+        $client = new Client;
+        $client->post(
+            $slack_api_link.
+            $slack_post_message_endpoint.
+            SlackHelper::composeSlackMessage($slack_bot_user_token, $slack_user, $pull_request)
+        );
+    }
+
+    public static function composeSlackMessage($token, $slack_user, $pull_request)
     {
         $attachments = [
             [
@@ -40,12 +65,12 @@ class SlackHelper
                 "fields" => [
                     [
                         "title" => "Author",
-                        "value" => "Greg",
+                        "value" => $pull_request['author'],
                         "short" => true
                     ],
                     [
-                        "title" => "Repo",
-                        "value" => "High",
+                        "title" => "Repository",
+                        "value" => $pull_request['repo'],
                         "short" => true
                     ]
                 ],
@@ -53,7 +78,7 @@ class SlackHelper
                     [
                         "text" => "View PR  💻",
                         "type" => "button",
-                        "url" => "https://google.com"
+                        "url" => $pull_request['url']
                     ]
                 ]
             ]
@@ -66,5 +91,27 @@ class SlackHelper
         ]);
 
         return '?'.$data;
+    }
+
+    public static function gitlabData($pull_request, $author)
+    {
+        $data = [];
+
+        $data['author'] = $author->name;
+        $data['repo'] = $pull_request->source->name;
+        $data['url'] = $pull_request->url;
+
+        return $data;
+    }
+
+    public static function bitbucketData($pull_request)
+    {
+        $data = [];
+
+        $data['author'] = $pull_request->author->display_name;
+        $data['repo'] = $pull_request->source->repository->name;
+        $data['url'] = $pull_request->links->html->href;
+
+        return $data;
     }
 }
