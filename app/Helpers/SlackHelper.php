@@ -114,7 +114,7 @@ class SlackHelper
 
         return $data;
     }
-    
+
     public static function githubData($pull_request)
     {
         $data = [];
