@@ -25,5 +25,5 @@ Route::get('/import/slack-users', 'SlackUsersController@importSlackUsers');
 Route::prefix('webhook')->group(function () {
     Route::post('gitlab', 'WebhooksController@gitlab');
     Route::post('bitbucket', 'WebhooksController@bitbucket');
+    Route::post('github', 'WebhooksController@github');
 });
-

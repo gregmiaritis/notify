@@ -114,4 +114,15 @@ class SlackHelper
 
         return $data;
     }
+
+    public static function githubData($pull_request)
+    {
+        $data = [];
+
+        $data['author'] = $pull_request->user->login;
+        $data['repo'] = $pull_request->head->repo->name;
+        $data['url'] = $pull_request->html_url;
+
+        return $data;
+    }
 }
