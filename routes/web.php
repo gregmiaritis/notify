@@ -27,4 +27,3 @@ Route::prefix('webhook')->group(function () {
     Route::post('bitbucket', 'WebhooksController@bitbucket');
     Route::post('github', 'WebhooksController@github');
 });
-
